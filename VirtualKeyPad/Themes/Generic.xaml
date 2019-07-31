@@ -1,0 +1,230 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:VirtualKeyPad">
+
+    <SolidColorBrush Color="#FF007CAF" x:Key="AccentBrush"/>
+    <SolidColorBrush Color="#FF005375" x:Key="AccentDarkBrush"/>
+    <SolidColorBrush Color="#FF0088BF" x:Key="AccentLightBrush"/>
+    <SolidColorBrush Color="#FFF5F5F5" x:Key="AlternativeBrush"/>
+    <SolidColorBrush Color="#FFCCCEDB" x:Key="BasicBrush"/>
+    <SolidColorBrush Color="#FF717171" x:Key="StrongBrush"/>
+    <SolidColorBrush Color="#FFDBDDE6" x:Key="DisabledBrush"/>
+    <SolidColorBrush Color="#FF444444" x:Key="MarkerBrush"/>
+    <SolidColorBrush Color="#FFEBEBEB" x:Key="SelectedBrush"/>
+
+    <Style TargetType="{x:Type local:VirtualKeyPad}">
+        <Setter Property="Background" Value="{StaticResource AlternativeBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="{StaticResource BasicBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:VirtualKeyPad}">
+                    <ControlTemplate.Resources>
+                        <Style x:Key="{x:Static local:VirtualKeyPad.AttachedVirtualKeyPadPopupStyleKey}" TargetType="Popup">
+                            <Setter Property="Placement" Value="Bottom" />
+                            <Setter Property="PopupAnimation" Value="Slide" />
+                            <Setter Property="AllowsTransparency" Value="True" />
+                        </Style>
+                        <Style x:Key="{x:Static local:VirtualKeyPad.AttachedVirtualKeyPadStyle}" TargetType="local:VirtualKeyPad">
+                            <Setter Property="Margin" Value="10" />
+                            <Setter Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Direction="-90"
+									                  BlurRadius="6"
+									                  Opacity="0.6"
+									                  ShadowDepth="2" />
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        <local:KeyToCharConverter x:Key="KeyToCharConverter"/>
+                    </ControlTemplate.Resources>
+                    <Border Background="{TemplateBinding Background}"
+					        BorderBrush="{TemplateBinding BorderBrush}"
+					        BorderThickness="{TemplateBinding BorderThickness}"
+					        FocusManager.IsFocusScope="True">
+                        <Grid Margin="1" ClipToBounds="True">
+                            <Grid.Resources>
+                                <Style TargetType="{x:Type ButtonBase}" x:Key="ButtonBaseStyle" BasedOn="{x:Null}">
+                                    <Setter Property="Command"
+									        Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=KeyPressCommand}" />
+                                    <Setter Property="Margin" Value="0.5" />
+                                    <Setter Property="BorderThickness" Value="0" />
+                                </Style>
+                                <ControlTemplate TargetType="{x:Type Button}" x:Key="ButtonControlTemplate1">
+                                    <Border x:Name="Chrome"
+									        BorderBrush="{TemplateBinding BorderBrush}"
+									        Background="{TemplateBinding Background}"
+									        BorderThickness="{TemplateBinding BorderThickness}"
+									        SnapsToDevicePixels="true">
+                                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+											                  Margin="{TemplateBinding Padding}"
+											                  RecognizesAccessKey="True"
+											                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+											                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsEnabled" Value="false">
+                                            <Setter Property="Foreground" Value="{StaticResource StrongBrush}" />
+                                            <Setter Property="Background" Value="{StaticResource DisabledBrush}" />
+                                            <Setter Property="BorderBrush" Value="{StaticResource BasicBrush}" />
+                                        </Trigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource AccentLightBrush}" />
+                                        </Trigger>
+                                        <Trigger Property="IsMouseCaptured" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource AccentDarkBrush}" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                                <ControlTemplate TargetType="{x:Type local:VirtualKeyPadRepeatButton}" x:Key="RepeatButtonControlTemplate1">
+                                    <Grid x:Name="Root">
+                                        <Border x:Name="Chrome"
+										        BorderBrush="{TemplateBinding BorderBrush}"
+										        Background="{TemplateBinding Background}"
+										        BorderThickness="{TemplateBinding BorderThickness}"
+										        SnapsToDevicePixels="true">
+                                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+												                  Margin="{TemplateBinding Padding}"
+												                  RecognizesAccessKey="True"
+												                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+												                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                        </Border>
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsEnabled" Value="false">
+                                            <Setter Property="Foreground" Value="{StaticResource StrongBrush}" />
+                                            <Setter Property="Background" Value="{StaticResource DisabledBrush}" />
+                                            <Setter Property="BorderBrush" Value="{StaticResource BasicBrush}" />
+                                        </Trigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource AccentLightBrush}" />
+                                        </Trigger>
+                                        <Trigger Property="IsMouseCaptured" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource AccentDarkBrush}" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonBaseStyle}">
+                                    <Setter Property="TextElement.Foreground" Value="{StaticResource MarkerBrush}" />
+                                    <Setter Property="TextElement.FontSize" Value="22" />
+                                    <Setter Property="Background" Value="{StaticResource AccentBrush}" />
+                                    <Setter Property="BorderBrush" Value="{StaticResource BasicBrush}" />
+                                    <Setter Property="FontSize" Value="22" />
+                                    <Setter Property="Foreground" Value="{StaticResource SelectedBrush}" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                                    <Setter Property="Cursor" Value="Hand" />
+                                    <Setter Property="Template" Value="{StaticResource ButtonControlTemplate1}" />
+                                </Style>
+                                <Style TargetType="{x:Type local:VirtualKeyPadRepeatButton}" BasedOn="{StaticResource ButtonBaseStyle}">
+                                    <Setter Property="TextElement.Foreground" Value="{StaticResource MarkerBrush}" />
+                                    <Setter Property="TextElement.FontSize" Value="22" />
+                                    <Setter Property="Background" Value="{StaticResource AccentDarkBrush}" />
+                                    <Setter Property="BorderBrush" Value="{StaticResource BasicBrush}" />
+                                    <Setter Property="FontSize" Value="22" />
+                                    <Setter Property="Foreground" Value="{StaticResource SelectedBrush}" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                                    <Setter Property="Cursor" Value="Hand" />
+                                    <Setter Property="Template" Value="{StaticResource RepeatButtonControlTemplate1}" />
+                                </Style>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}" x:Key="DarkButtonStyle">
+                                    <Setter Property="Background" Value="{StaticResource AccentDarkBrush}" />
+                                </Style>
+                            </Grid.Resources>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Button CommandParameter="{x:Static Key.NumPad1}">
+                                <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}, Path=CommandParameter, Converter={StaticResource KeyToCharConverter}}"/>
+                            </Button>
+                            <Button Grid.Row="0" Grid.Column="1"
+							        CommandParameter="{x:Static Key.NumPad2}">
+                                <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}, Path=CommandParameter, Converter={StaticResource KeyToCharConverter}}"/>
+                            </Button>
+                            <Button Grid.Row="0" Grid.Column="2"
+							        CommandParameter="{x:Static Key.NumPad3}">
+                                <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}, Path=CommandParameter, Converter={StaticResource KeyToCharConverter}}"/>
+                            </Button>
+                            <local:VirtualKeyPadRepeatButton Grid.Row="0"
+																Grid.Column="3"
+																Grid.RowSpan="2"
+																CommandParameter="{x:Static Key.Back}">
+                                <Viewbox Margin="5"
+								         Width="22"
+								         Height="22">
+                                    <Canvas Width="24" Height="24">
+                                        <Path
+											Data="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-3 12.59L17.59 17 14 13.41 10.41 17 9 15.59 12.59 12 9 8.41 10.41 7 14 10.59 17.59 7 19 8.41 15.41 12 19 15.59z"
+											Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ButtonBase}}, Path=Foreground}" />
+                                    </Canvas>
+                                </Viewbox>
+                            </local:VirtualKeyPadRepeatButton>
+
+                            <Button Grid.Row="1" Grid.Column="0"
+							        CommandParameter="{x:Static Key.NumPad4}">
+                                <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}, Path=CommandParameter, Converter={StaticResource KeyToCharConverter}}"/>
+                            </Button>
+                            <Button Grid.Row="1" Grid.Column="1"
+							        CommandParameter="{x:Static Key.NumPad5}">
+                                <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}, Path=CommandParameter, Converter={StaticResource KeyToCharConverter}}"/>
+                            </Button>
+                            <Button Grid.Row="1" Grid.Column="2"
+							        CommandParameter="{x:Static Key.NumPad6}">
+                                <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}, Path=CommandParameter, Converter={StaticResource KeyToCharConverter}}"/>
+                            </Button>
+
+                            <Button Grid.Row="2" Grid.Column="0"
+							        CommandParameter="{x:Static Key.NumPad7}">
+                                <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}, Path=CommandParameter, Converter={StaticResource KeyToCharConverter}}"/>
+                            </Button>
+                            <Button Grid.Row="2" Grid.Column="1"
+							        CommandParameter="{x:Static Key.NumPad8}">
+                                <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}, Path=CommandParameter, Converter={StaticResource KeyToCharConverter}}"/>
+                            </Button>
+                            <Button Grid.Row="2" Grid.Column="2"
+							        CommandParameter="{x:Static Key.NumPad9}">
+                                <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}, Path=CommandParameter, Converter={StaticResource KeyToCharConverter}}"/>
+                            </Button>
+                            <Button Grid.Row="2" Grid.Column="3" Grid.RowSpan="2"
+							        Style="{StaticResource DarkButtonStyle}"
+							        CommandParameter="{x:Static Key.Enter}">
+                                <Viewbox Margin="5"
+								         Width="22"
+								         Height="22">
+                                    <Canvas Width="24" Height="24">
+                                        <Path Data="M11,9L12.42,10.42L8.83,14H18V4H20V16H8.83L12.42,19.58L11,21L5,15L11,9Z"
+										      Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}, Path=Foreground}" />
+                                    </Canvas>
+                                </Viewbox>
+                            </Button>
+
+                            <Button Grid.Row="3" Grid.Column="0"
+							        CommandParameter="{x:Static Key.NumPad0}">
+                                <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}, Path=CommandParameter, Converter={StaticResource KeyToCharConverter}}"/>
+                            </Button>
+                            <Button Grid.Row="3" Grid.Column="1"
+							        CommandParameter="{x:Static Key.Subtract}">
+                                <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}, Path=CommandParameter, Converter={StaticResource KeyToCharConverter}}"/>
+                            </Button>
+                            <Button Grid.Row="3" Grid.Column="2"
+							        CommandParameter="{x:Static Key.OemPeriod}">
+                                <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}, Path=CommandParameter, Converter={StaticResource KeyToCharConverter}}"/>
+                            </Button>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29123.88
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualKeyPad", "VirtualKeyPad\VirtualKeyPad.csproj", "{03E8BCAD-534A-4E8F-ADA8-0973F78B4B24}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyPadTest", "KeyPadTest\KeyPadTest.csproj", "{2335442D-841B-40F8-B831-0868A839B394}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{03E8BCAD-534A-4E8F-ADA8-0973F78B4B24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03E8BCAD-534A-4E8F-ADA8-0973F78B4B24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03E8BCAD-534A-4E8F-ADA8-0973F78B4B24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03E8BCAD-534A-4E8F-ADA8-0973F78B4B24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2335442D-841B-40F8-B831-0868A839B394}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2335442D-841B-40F8-B831-0868A839B394}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2335442D-841B-40F8-B831-0868A839B394}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2335442D-841B-40F8-B831-0868A839B394}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4D3BA55A-3665-4AD4-A9C6-9C1E1DEDB0BE}
+	EndGlobalSection
+EndGlobal
